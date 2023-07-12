@@ -81,7 +81,6 @@ func Ping(host string, count int) (PingReport, error) {
 		if err != nil {
 			return report, err
 		}
-		// 打印结果
 		switch msg.Type {
 		case ipv4.ICMPTypeEchoReply:
 			echoReply, ok := msg.Body.(*icmp.Echo)
@@ -109,7 +108,7 @@ func Ping(host string, count int) (PingReport, error) {
 	}
 	report.AvgLatency = report.AvgLatency / time.Duration(count)
 	if report.LostNum > 0 {
-		report.LostPer = count / report.LostNum
+		report.LostPer = (report.LostNum / count) * 100
 	}
 	return report, nil
 }
