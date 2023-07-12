@@ -21,6 +21,7 @@ type PingReport struct {
 	LostNum    int
 	LostPer    int
 	Packages   []IcmpReply
+	HostIp     string
 }
 
 type IcmpReply struct {
@@ -110,5 +111,6 @@ func Ping(host string, count int) (PingReport, error) {
 	if report.LostNum > 0 {
 		report.LostPer = (report.LostNum / count) * 100
 	}
+	report.HostIp = dst.String()
 	return report, nil
 }
